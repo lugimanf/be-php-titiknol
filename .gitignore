@@ -1,0 +1,82 @@
+# ======================================
+# Laravel / PHP
+# ======================================
+
+/vendor/
+composer.lock
+.env
+.env.*
+.phpunit.result.cache
+Homestead.yaml
+Homestead.json
+npm-debug.log
+yarn-error.log
+
+# ======================================
+# Laravel Cache & Logs
+# ======================================
+
+/storage/*.key
+/storage/app/public/*
+!/storage/app/public/.gitignore
+/storage/debugbar/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/logs/.gitignore
+
+# ======================================
+# Laravel Mix / Vite / Frontend
+# ======================================
+
+/node_modules/
+/public/hot
+/public/storage
+/public/build
+/public/mix-manifest.json
+/public/js/*.map
+/public/css/*.map
+
+# ======================================
+# IDE & Editor
+# ======================================
+
+# PhpStorm / IntelliJ
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+.history/
+*.code-workspace
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# ======================================
+# OS & Misc
+# ======================================
+
+.DS_Store
+Thumbs.db
+*.log
+*.bak
+*.tmp
+*.swp
+*.swo
+*.orig
+*.old
+*.temp
+
+# ======================================
+# Deployment & Tools
+# ======================================
+
+/.env.backup
+/deploy.sh
+/deployment/
+.env.example.local
+*.local
