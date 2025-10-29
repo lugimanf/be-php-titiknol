@@ -19,11 +19,9 @@ class User
     public function get_user($data)
     {
         $user = $this->userModel->get($data['user_id']);
+
         return [
             "data" =>$user
         ];
-
-            
-
     }
 }

@@ -112,7 +112,7 @@ class Auth extends Controller
 
         // Cek username dan password dengan model
         $userModel = new UserModel();
-        $user = $userModel->findByEmail($email);
+        $user = $userModel->find_by_email($email);
 
         if ($user) {
             return $this->response->setJSON([

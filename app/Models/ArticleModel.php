@@ -20,7 +20,7 @@ class Article extends Entity
 
 class ArticleModel extends Model
 {
-    protected $table = 'article'; // Nama tabel
+    protected $table = 'articles'; // Nama tabel
     protected $primaryKey = 'id';
     protected $allowedFields = ['name', 'content'];
     protected $returnType = Article::class;

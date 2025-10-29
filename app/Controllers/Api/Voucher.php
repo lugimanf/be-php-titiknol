@@ -3,23 +3,24 @@
 namespace App\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
-use App\Usecases\Api\User as userUsecase;
+use App\Usecases\Api\Voucher as voucherUsecase;
 use Illuminate\Http\Request;
 
-class User extends ResourceController
+class Voucher extends ResourceController
 {
     protected $userUsecase;
     public function __construct()
     {
-        $this->userUsecase = new userUsecase();
+        $this->userUsecase = new voucherUsecase();
     }
     public function index()
     {
-        // Ambil data input dari request
-        $payload = [
-            "user_id" => $this->request->user->id,
-        ];
-        $result = $this->userUsecase->get_user($payload);
+        $payload =$this->request->getGet();
+        $payload['limit'] = empty($payload['limit']) ? 10 : (int)$payload['limit'];
+        $payload['page'] = empty($payload['page']) ? 1 : (int)$payload['page'];
+        $payload['order_by'] = empty($payload['order_by']) ? "id;desc" : (int)$payload['page'];
+
+        $result = $this->userUsecase->get_vouchers($payload);
 
         if (isset($result['message'])) {
             return $this->response->setJSON([

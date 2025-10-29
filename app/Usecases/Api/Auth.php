@@ -24,7 +24,7 @@ class Auth
         // Cek username dan password dengan model
         $userModel = new UserModel();
         $otp = generate_otp();
-        $user = $userModel->findByEmail($email);
+        $user = $userModel->find_by_email($email);
 
         if ($user) {
             // Simpan ke cache session
@@ -33,7 +33,7 @@ class Auth
             }
             $sessionId = uniqid('login_otp_', true);
             $this->session->save($sessionId, [
-                'user_id' => $user["id"],
+                'user_id' => $user->id,
                 'otp' =>$otp,
             ], 120); // expired 2 menit
 

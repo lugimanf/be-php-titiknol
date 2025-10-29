@@ -12,6 +12,7 @@ $routes->group('api', function($routes) {
     $routes->group('', ['filter' => 'auth'], function($routes) {
         $routes->get('user', 'Api\User::index');
         $routes->get('articles', 'Api\Article::index');
+        $routes->get('vouchers', 'Api\Voucher::index');
     });
 });
 
