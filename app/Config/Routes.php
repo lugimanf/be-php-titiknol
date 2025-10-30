@@ -13,6 +13,7 @@ $routes->group('api', function($routes) {
         $routes->get('user', 'Api\User::index');
         $routes->get('articles', 'Api\Article::index');
         $routes->get('vouchers', 'Api\Voucher::index');
+        $routes->get('voucher/(:num)', 'Api\Voucher::get_by_id/$1');
     });
 });
 

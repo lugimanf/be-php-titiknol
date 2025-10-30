@@ -44,7 +44,17 @@ class VoucherModel extends Model
             $type_order = empty($order_by_split[1]) ? "asc" : $order_by_split[1];
             $data = $vouchers->orderBy($order_by_split[0], $type_order);
         }
-        $vouchers = $data->select("id, name, image, price, discount_in_percent, CEIL(price * (100 - discount_in_percent) / 100) as discount_price", );
+        $vouchers = $data->select("id, name, image, price, discount_in_percent, CEIL(price * (100 - discount_in_percent) / 100) as discount_price")
+        ->where("is_active", 1);
         return $vouchers->find();
+    }
+
+    public function get_by_id($id)
+    {
+        $voucher = $this->select("*, CEIL(price * (100 - discount_in_percent) / 100) as discount_price", )
+            ->where("id",$id)
+            ->where("is_active",1)
+            ->first();
+        return $voucher;
     }
 }

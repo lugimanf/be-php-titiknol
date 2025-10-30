@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class Voucher extends ResourceController
 {
-    protected $userUsecase;
+    protected $voucherUsecase;
     public function __construct()
     {
-        $this->userUsecase = new voucherUsecase();
+        $this->voucherUsecase = new voucherUsecase();
     }
     public function index()
     {
@@ -20,7 +20,24 @@ class Voucher extends ResourceController
         $payload['page'] = empty($payload['page']) ? 1 : (int)$payload['page'];
         $payload['order_by'] = empty($payload['order_by']) ? "id;desc" : (int)$payload['page'];
 
-        $result = $this->userUsecase->get_vouchers($payload);
+        $result = $this->voucherUsecase->get_vouchers($payload);
+
+        if (isset($result['message'])) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => $result['message'],
+            ])->setStatusCode(404);
+        }
+        
+        return $this->respond([
+            'status' => 'success',
+            'data' => $result['data'],
+        ]);
+    }
+
+    public function get_by_id($id)
+    {
+        $result = $this->voucherUsecase->get_voucher_by_id($id);
 
         if (isset($result['message'])) {
             return $this->response->setJSON([

@@ -29,4 +29,19 @@ class Voucher
                 ]
         ];
     }
+
+    public function get_voucher_by_id($id)
+    {
+        $voucher = $this->voucherModel->get_by_id($id);
+
+        if(empty($voucher)){
+            return [
+                "message" => "data not found",
+            ];
+        }
+
+        return [
+            "data" => $voucher,
+        ];
+    }
 }
