@@ -24,7 +24,9 @@ class Voucher
         );
 
         return [
-            "data" =>$vouchers
+            "data" =>[
+                    "vouchers" => $vouchers,
+                ]
         ];
     }
 }

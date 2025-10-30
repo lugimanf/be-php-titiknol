@@ -35,7 +35,9 @@ class ArticleModel extends Model
             $type_order = empty($order_by_split[1]) ? "asc" : $order_by_split[1];
             $data = $data->orderBy($order_by_split[0], $type_order);
         }
-        $data = $data->select("title, id, image", );
-        return $data->find();
+        return $data->select("title, id, image")
+            ->where("is_publish", 1)
+            ->find();
+        
     }
 }
