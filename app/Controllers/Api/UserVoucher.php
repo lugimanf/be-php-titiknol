@@ -3,22 +3,27 @@
 namespace App\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
-use App\Usecases\Api\User as userUsecase;
+use App\Usecases\Api\UserVoucher as userVoucherUsecase;
 
-class User extends ResourceController
+class UserVoucher extends ResourceController
 {
-    protected $userUsecase;
+    protected $userVoucherUsecase;
     public function __construct()
     {
-        $this->userUsecase = new userUsecase();
+        $this->userVoucherUsecase = new userVoucherUsecase();
     }
-    public function index()
+
+    public function user_voucher()
     {
-        // Ambil data input dari request
-        $payload = [
-            "user_id" => $this->request->user->id,
-        ];
-        $result = $this->userUsecase->get_user($payload);
+        $payload =$this->request->getGet();
+        $payload['limit'] = empty($payload['limit']) ? 10 : (int)$payload['limit'];
+        $payload['page'] = empty($payload['page']) ? 1 : (int)$payload['page'];
+        $payload['order_by'] = empty($payload['order_by']) ? "id;desc" : (int)$payload['page'];
+        $payload['status'] = empty($payload['status']) ? 0 : (int)$payload['status'];
+
+        $result = $this->userVoucherUsecase->vouchers_by_user_id(
+            $this->request->user,
+            $payload);
 
         if (isset($result['message'])) {
             return $this->response->setJSON([
@@ -33,13 +38,18 @@ class User extends ResourceController
         ]);
     }
 
-    public function patch_fcm_token()
+    public function insert_voucher()
     {
         // Ambil data input dari request
         $payload = $this->request->getJSON(true);
         $rules = [
-            'fcm_token'  => 'required',
-        ];
+            'voucher_id'  => [
+                "rules" => 'required',
+                'errors' => [
+                    'required'    => 'voucher_id wajid diisi',
+                ],
+            ],
+        ];        
 
         if (!$this->validate($rules)) {
             $errors = $this->validator->getErrors();
@@ -48,8 +58,8 @@ class User extends ResourceController
                 'message' => strtolower(reset($errors)),
             ])->setStatusCode(400);
         }
-        $result = $this->userUsecase->update_fcm_token(
-            $this->request->user->id, 
+        $result = $this->userVoucherUsecase->insert_voucher(
+            $this->request->user, 
             $payload
         );
 

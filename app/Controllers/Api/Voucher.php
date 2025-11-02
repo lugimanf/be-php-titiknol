@@ -4,7 +4,6 @@ namespace App\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Usecases\Api\Voucher as voucherUsecase;
-use Illuminate\Http\Request;
 
 class Voucher extends ResourceController
 {
@@ -49,6 +48,43 @@ class Voucher extends ResourceController
         return $this->respond([
             'status' => 'success',
             'data' => $result['data'],
+        ]);
+    }
+
+    public function insert_voucher()
+    {
+        // Ambil data input dari request
+        $payload = $this->request->getJSON(true);
+        $rules = [
+            'voucher_id'  => [
+                "rules" => 'required',
+                'errors' => [
+                    'required'    => 'voucher_id wajid diisi',
+                ],
+            ],
+        ];        
+
+        if (!$this->validate($rules)) {
+            $errors = $this->validator->getErrors();
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => strtolower(reset($errors)),
+            ])->setStatusCode(400);
+        }
+        $result = $this->voucherUsecase->insert_voucher(
+            $this->request->user, 
+            $payload
+        );
+
+        if (isset($result['message'])) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => $result['message'],
+            ])->setStatusCode(422 );
+        }
+        
+        return $this->respond([
+            'status' => 'success',
         ]);
     }
 }

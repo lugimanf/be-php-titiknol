@@ -3,16 +3,18 @@
 namespace App\Usecases\Api;
 
 use App\Models\VoucherModel;
-use Config\Services;
+use App\Models\UserModel;
 
 class Voucher
 {
     protected $voucherModel;
+    protected $userModel;
     protected $session;
 
     public function __construct()
     {
         $this->voucherModel = new VoucherModel();
+        $this->userModel = new UserModel();
     }
 
     public function get_vouchers($payload)
