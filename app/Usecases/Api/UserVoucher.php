@@ -27,7 +27,7 @@ class UserVoucher
         $user_vouchers = $this->userVoucherModel->vouchers_by_user_id($user->id, $payload);
 
         return [
-            "data" => $user_vouchers,
+            "data" => ["user_vouchers" => $user_vouchers],
         ];
     }
 

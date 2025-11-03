@@ -16,7 +16,8 @@ class UserVoucher extends Entity
         'status'                => 'integer',
         'detail'                => 'string',
         'image'                 => 'string',
-        'name'                 => 'string',
+        'name'                  => 'string',
+        'description'           => 'string',
         'created_at'            => 'datetime',
         'updated_at'            => 'datetime',
     ];
@@ -39,13 +40,14 @@ class UserVoucherModel extends Model
 
     public function vouchers_by_user_id($user_id, $payload)
     {
-        $vouchers = $this->limit($payload["limit"], ($payload['page'] - 1) * 10);
+        $vouchers = $this->limit($payload["limit"], ($payload['page'] - 1) * $payload["limit"]);
         if(!empty($payload["order_by"])){
             $order_by_split = explode(";", $payload["order_by"]);
             $type_order = empty($order_by_split[1]) ? "asc" : $order_by_split[1];
-            $data = $vouchers->orderBy($order_by_split[0], $type_order);
+            $vouchers = $vouchers->orderBy($order_by_split[0], $type_order);
         }
-        $vouchers = $data->select("user_voucher.id, code, status, user_voucher.created_at, vouchers.image as image, vouchers.name as name")
+        $vouchers = $vouchers->select("user_voucher.id as id, code, status, user_voucher.created_at
+        , vouchers.image as image, vouchers.name as name, vouchers.description as description")
         ->join("vouchers", "vouchers.id = user_voucher.voucher_id")
         ->where("status", $payload['status'])
         ->where("user_id", $user_id);

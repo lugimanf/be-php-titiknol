@@ -18,7 +18,7 @@ class UserVoucher extends ResourceController
         $payload =$this->request->getGet();
         $payload['limit'] = empty($payload['limit']) ? 10 : (int)$payload['limit'];
         $payload['page'] = empty($payload['page']) ? 1 : (int)$payload['page'];
-        $payload['order_by'] = empty($payload['order_by']) ? "id;desc" : (int)$payload['page'];
+        $payload['order_by'] = empty($payload['order_by']) ? "id;desc" : $payload['order_by'];
         $payload['status'] = empty($payload['status']) ? 0 : (int)$payload['status'];
 
         $result = $this->userVoucherUsecase->vouchers_by_user_id(

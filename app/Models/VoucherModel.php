@@ -38,7 +38,7 @@ class VoucherModel extends Model
     // Fungsi untuk mendapatkan list voucher yang aktif
     public function get_vouchers($limit, $page, $order_by)
     {
-        $vouchers = $this->limit($limit, ($page - 1) * 10);
+        $vouchers = $this->limit($limit, ($page - 1) * $limit);
         if(!empty($order_by)){
             $order_by_split = explode(";", $order_by);
             $type_order = empty($order_by_split[1]) ? "asc" : $order_by_split[1];
