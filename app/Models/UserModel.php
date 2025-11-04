@@ -13,6 +13,8 @@ class User extends Entity
         'last_name'     => 'string',
         'email'         => 'string',
         'point'         => 'integer',
+        'level'         => 'integer',
+        'rank_id'         => 'integer',
         'fcm_token'     => 'string',
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
